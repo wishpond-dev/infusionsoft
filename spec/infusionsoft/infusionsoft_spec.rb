@@ -18,12 +18,8 @@ describe Infusionsoft::Client do
     Infusionsoft::Client.new(options.merge(expires_at: Time.now - 30))
   end
 
-  let!(:token3) do
-    Infusionsoft::Client.new(options.merge(expires_at: Time.now + 30))
-  end
-
-  describe '#initialize' do
-    it 'assigns #oauth_client' do
+  describe '#oauth_client' do
+    it 'returns an OAuth2::Client' do
       expect(subject.oauth_client).to be_a(OAuth2::Client)
     end
 
@@ -39,7 +35,7 @@ describe Infusionsoft::Client do
   end
 
   describe '#credentials' do
-    it 'returns an OAuth2::AuthHash with the OAuth2::AccessToken credentials' do
+    it 'returns a hash with the OAuth2::AccessToken credentials' do
       expect(subject.credentials[:token]).to eq('c249023')
       expect(subject.credentials[:expires_at]).to eq(1577836800)
       expect(subject.credentials[:refresh_token]).to eq('r32454v4')
@@ -47,14 +43,17 @@ describe Infusionsoft::Client do
   end
 
   describe '#expired?' do
-    it 'returns true/false if the current Access Token has expired' do
-      expect(subject.expired?).to eq(false)
+    it 'returns true if the current access token has expired' do
       expect(token2.expired?).to eq(true)
+    end
+
+    it 'returns false if the current access token has not expired' do
+      expect(subject.expired?).to eq(false)
     end
   end
 
   describe '#refresh_access_token' do
-    it 'returns credentials as a hash if the access_token has not expired' do
+    it 'returns a hash of credentials if the access_token has not expired' do
       expect(subject.refresh_access_token[:token]).to eq('c249023')
       expect(subject.refresh_access_token[:expires_at]).to eq(1577836800)
       expect(subject.refresh_access_token[:refresh_token]).to eq('r32454v4')

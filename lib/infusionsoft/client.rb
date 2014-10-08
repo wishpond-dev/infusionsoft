@@ -28,10 +28,6 @@ module Infusionsoft
       @oauth_client
     end
 
-    def access_token
-      @token.token
-    end
-
     def expired?
       Time.at(credentials[:expires_at]) <= Time.now
     end
@@ -56,10 +52,10 @@ module Infusionsoft
         port: 443,
         use_ssl: true,
         host: 'api.infusionsoft.com',
-        path: "/crm/xmlrpc/v1?access_token=#{access_token}"
+        path: "/crm/xmlrpc/v1?access_token=#{credentials[:token]}"
       )
 
-      args.unshift(access_token)
+      args.unshift(credentials[:token])
 
       client.http_header_extra = { 'User-Agent' => "Infusionsoft (RubyGem)" }
 

@@ -1,8 +1,6 @@
 Infusionsoft - OAuth
 ---
 
-Looking for the original Infusionsoft Ruby Gem? https://github.com/nateleavitt/infusionsoft
-
 For more details, read the Infusionsoft documentation: https://developer.infusionsoft.com/docs
 
 Installation

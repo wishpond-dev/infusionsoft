@@ -57,7 +57,10 @@ module Infusionsoft
 
       args.unshift(credentials[:token])
 
-      client.http_header_extra = { 'User-Agent' => "Infusionsoft (RubyGem)" }
+      client.http_header_extra = {
+        'User-Agent' => 'Infusionsoft (RubyGem)',
+        'Accept-Encoding' => 'identity'
+      }
 
       begin
         response = client.call(service_call, *args)
@@ -82,7 +85,8 @@ module Infusionsoft
       request = Net::HTTP::Post.new(uri.request_uri)
       request.basic_auth(oauth_client.id, oauth_client.secret)
       request.set_form_data(
-        grant_type: 'refresh_token', refresh_token: credentials[:refresh_token]
+        grant_type: 'refresh_token',
+        refresh_token: credentials[:refresh_token]
       )
 
       response = http.request(request)

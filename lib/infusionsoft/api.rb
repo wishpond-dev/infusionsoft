@@ -164,13 +164,13 @@ module Infusionsoft
 
     # Loads contact info from the database
     def load_contact(contact_id, fields = [])
-      fields = fields.any? ? fields : CONTACT_FIELDS_LABELS
+      fields = fields.any? ? fields : CONTACT_FIELD_LABELS
       connection('ContactService.load', contact_id, fields)
     end
 
     # Finds all contacts with the given email
     def find_contact_by_email(email, fields = [])
-      fields = fields.any? ? fields : CONTACT_FIELDS_LABELS
+      fields = fields.any? ? fields : CONTACT_FIELD_LABELS
       connection('ContactService.findByEmail', email, fields)
     end
 
@@ -205,7 +205,7 @@ module Infusionsoft
     def fetch_contacts_with_tag(tag_id, custom_fields = [], page = 0)
       contacts = []
       custom_fields.map! { |field| "_#{field}"}
-      fields = CONTACT_FIELDS_LABELS + custom_fields
+      fields = CONTACT_FIELD_LABELS + custom_fields
 
       # This covers all the possible location of the tagID in the contact hash
       datas =

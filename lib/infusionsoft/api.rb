@@ -204,8 +204,7 @@ module Infusionsoft
 
     def fetch_contacts_with_tag(tag_id, custom_fields = [], page = 0)
       contacts = []
-      custom_fields.map! { |field| "_#{field}"}
-      fields = CONTACT_FIELD_LABELS + custom_fields
+      fields = contact_field_labels(custom_fields)
 
       # This covers all the possible location of the tagID in the contact hash
       datas =
@@ -220,6 +219,15 @@ module Infusionsoft
         contacts += query('Contact', 1000, page, data, fields)
       end
       contacts
+    end
+
+    def fetch_contacts(custom_fields = [], page = 0, data = {})
+      fields = contact_field_labels(custom_fields)
+      query('Contact', 1000, page, data, fields)
+    end
+
+    def contact_field_labels(custom_fields = [])
+      custom_fields.map { |field| "_#{field}" } + CONTACT_FIELD_LABELS
     end
   end
 end

@@ -221,5 +221,11 @@ module Infusionsoft
       end
       contacts
     end
+
+    def get_contacts(page = 0, custom_fields = [], data={})
+      fields = CONTACT_FIELD_LABELS + custom_fields
+      binding.pry
+      query('Contact', 1000, page, data, fields)
+    end
   end
 end
